@@ -1,0 +1,36 @@
+type Category implements Node {
+  id: ID!
+  name: String
+  restaurants(before: String, after: String, first: Int, last: Int): RestaurantConnection
+}
+
+interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type Query {
+  categories(names: [String]): [Category]
+  node(id: ID!): Node
+}
+
+type Restaurant implements Node {
+  id: ID!
+  name: String
+}
+
+type RestaurantConnection {
+  pageInfo: PageInfo!
+  edges: [RestaurantEdge]
+}
+
+type RestaurantEdge {
+  node: Restaurant
+  cursor: String!
+}
